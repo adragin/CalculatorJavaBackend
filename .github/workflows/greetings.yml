@@ -9,8 +9,13 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - name: First itteration
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: "Hallo! Thanks for your first issue"
-        pr-message: "Message that will be displayed on users' first pull request"
+      - name: Leave a comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Спасибо за создание issue! Мы скоро его рассмотрим."
+            })
